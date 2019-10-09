@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>SPI Utility : QGIS Plugin</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,700,900|Oswald:400,700"> 
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="css/mediaelementplayer.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
+    <link rel="stylesheet" href="css/fl-bigmug-line.css">
+    
+  
+    <link rel="stylesheet" href="css/aos.css">
+
+    <link rel="stylesheet" href="css/style.css">
+    
+  </head>
+  <body>
+
+  
+    
+  
+  <div class="site-wrap">
+
+    <div class="site-navbar mt-4">
+        <div class="container py-1">
+          <div class="row align-items-center">
+            <div class="col-8 col-md-8 col-lg-4">
+              <h1 class="mb-0"><a href="index.html" class="text-white h2 mb-0"><strong></span></strong></a></h1>
+            </div>
+            <div class="col-4 col-md-4 col-lg-8">
+              <nav class="site-navigation text-right text-md-right" role="navigation">
+
+                <div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3"><a href="#" class="site-menu-toggle js-menu-toggle text-white"><span class="icon-menu h3"></span></a></div>
+
+                <ul class="site-menu js-clone-nav d-none d-lg-block">
+				
+                  <li>
+                    <a href="https://github.com/manaruchi/SPIUtility" class="btn btn-primary px-4 py-3"><font color="black">Download SPIUtility</font></a> 
+                  </li>
+                  <li><a href="user_manual_spiutility.pdf" class="btn btn-primary px-4 py-3"><font color="black">User Guide</font></a></li>
+				  <li><a href="https://github.com/manaruchi/SPIUtility/issues" class="btn btn-primary px-4 py-3"><font color="black">Report Issues</font></a></li>
+				  
+				  
+                </ul>
+              </nav>
+            </div>
+           
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-mobile-menu">
+      <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close mt-3">
+          <span class="icon-close2 js-menu-toggle"></span>
+        </div>
+      </div>
+      <div class="site-mobile-menu-body"></div>
+    </div> <!-- .site-mobile-menu -->
+    
+    <div class="site-blocks-cover inner-page-cover overlay" style="background-image: url('images/hero_bg_1.jpg');" data-aos="fade" data-stellar-background-ratio="0.5" data-aos="fade">
+      <div class="container">
+        <div class="row align-items-center justify-content-center">
+          <div class="col-md-8 text-center" data-aos="fade-up" data-aos-delay="400">
+            <h1 class="mb-4">SPI Utility</h1>
+            <p class="mb-5">QGIS 2.x Plugin to Calculate Standardized Precipitation Index (SPI) for Drought Monitoring Applications using Point and Raster Precipitation Data</p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="container">
+      
+        
+        
+		  <br />
+          <h2>Details</h2><br />
+          <p>The Standardized Precipitation Index (SPI), a drought index widely used for drought monitoring, is estimated based on the probability of deficit in precipitation at any time scale. It is a simple and flexible drought index as it requires only precipitation as input data and it can quantify the degree of dryness/wetness on multiple time scales to address different types of droughts. Availability of free remotely sensed precipitation data and long term reanalysis meteorological data makes the usage of SPI more convenient at various spatial and temporal scales. At the same time, processing such high-volume data requires a high magnitude of processing power and time. This paper introduces SPI Utility, an open-source, light-weight and fast graphical user interface to estimate SPI values at different spatial and temporal scales. It is developed in Python using Geospatial Data Abstraction Library (GDAL), Numpy, Scipy and PyQt4 libraries as a plugin into Quantum Geographic Information System (QGIS). It can generate SPI values for 1-, 3-, 4-, 6-, 9-, 12-, 24- and 36- month timescales for any specified month range. The developed SPI Utility also classifies the generated SPI values into user-defined drought classes to generate the count and probability of occurrence of the drought classes. It can handle long duration precipitation data in form of both raster files and point data files. cProfile profiling showed that the plugin could generate annual SPI values for 117 years for rasters having dimension 135 and 129 for any timescale in around 8 minutes in a system having moderate specifications. The tool can be used for drought monitoring in low performance systems and early drought warning systems.</p>
+          <br />
+		  <h2>Authors</h2><br />
+		  <p><b>Manaruchi Mohapatra</b><br /> <font size="2"><i>Student of Master of Technology in Remote Sensing and GIS at Indian Institute of Remote Sensing, Indian Space Reseach Organisation (IIRS-ISRO), Dehradun</i><br />Email : manaruchimohapatra@gmail.com</font></p>
+		   
+		  
+		  <p><b>Gunjan Kour</b><br /> <font size="2"><i>Post Graduate Diploma in Remote Sensing and GIS at Indian Institute of Remote Sensing, Indian Space Reseach Organisation (IIRS-ISRO), Dehradun</i><br />E-mail : gunjankour13@gmail.com</font></p>
+		   
+		  <p><b>Dr Bhaskar R Nikam</b><br /> <font size="2"><i>Scientist/Engineer – ‘SE’, Water Resources Department, Indian Institute of Remote Sensing, Dehradun</i><br />E-mail : bhaskarnikam@iirs.gov.in</font></p>
+		  
+		  <br />
+		  <h2>Misc Information</h2><br /> 
+		  <p>The SPI Utility plugin is maintained by Manaruchi Mohapatra, Indian Institute of
+Remote Sensing (IIRS-ISRO), Dehradun. For feedbacks, supports and queries please
+drop a mail at manaruchimohapatra@gmail.com. The tool is free to use, but an
+acknowledgment to SPI Utility will be appreciated. </p>
+		  
+		  <br />
+		  <h2>Links</h2><br />
+          <p><a href="https://github.com/manaruchi/SPIUtility" class="btn btn-primary px-4 py-3">Download SPIUtility</a> <a href="https://plugins.qgis.org/plugins/SPIUtility/" class="btn btn-primary px-4 py-3">SPIUtility on Plugin Repository</a> <a href="user_manual_spiutility.pdf" class="btn btn-primary px-4 py-3">User Guide</a></p>
+        
+      
+    </div>
+
+    
+    
+        <div class="row pt-5 mt-5 text-center">
+          <div class="col-md-12">
+            <p>
+			<font size="1">
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            Copyright &copy;<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart text-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a>
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            </font></p>
+          </div>
+          
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="js/jquery-ui.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/mediaelement-and-player.min.js"></script>
+  <script src="js/jquery.stellar.min.js"></script>
+  <script src="js/jquery.countdown.min.js"></script>
+  <script src="js/jquery.magnific-popup.min.js"></script>
+  <script src="js/bootstrap-datepicker.min.js"></script>
+  <script src="js/aos.js"></script>
+  <script src="js/circleaudioplayer.js"></script>
+
+  <script src="js/main.js"></script>
+    
+  </body>
+</html>
