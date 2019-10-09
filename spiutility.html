@@ -89,10 +89,10 @@
         
         
 		  <br />
-          <h2>Details</h2><br />
+          <h3>Details</h3><br />
           <p>The Standardized Precipitation Index (SPI), a drought index widely used for drought monitoring, is estimated based on the probability of deficit in precipitation at any time scale. It is a simple and flexible drought index as it requires only precipitation as input data and it can quantify the degree of dryness/wetness on multiple time scales to address different types of droughts. Availability of free remotely sensed precipitation data and long term reanalysis meteorological data makes the usage of SPI more convenient at various spatial and temporal scales. At the same time, processing such high-volume data requires a high magnitude of processing power and time. This paper introduces SPI Utility, an open-source, light-weight and fast graphical user interface to estimate SPI values at different spatial and temporal scales. It is developed in Python using Geospatial Data Abstraction Library (GDAL), Numpy, Scipy and PyQt4 libraries as a plugin into Quantum Geographic Information System (QGIS). It can generate SPI values for 1-, 3-, 4-, 6-, 9-, 12-, 24- and 36- month timescales for any specified month range. The developed SPI Utility also classifies the generated SPI values into user-defined drought classes to generate the count and probability of occurrence of the drought classes. It can handle long duration precipitation data in form of both raster files and point data files. cProfile profiling showed that the plugin could generate annual SPI values for 117 years for rasters having dimension 135 and 129 for any timescale in around 8 minutes in a system having moderate specifications. The tool can be used for drought monitoring in low performance systems and early drought warning systems.</p>
           <br />
-		  <h2>Authors</h2><br />
+		  <h3>Authors</h3><br />
 		  <p><b>Manaruchi Mohapatra</b><br /> <font size="2"><i>Student of Master of Technology in Remote Sensing and GIS at Indian Institute of Remote Sensing, Indian Space Reseach Organisation (IIRS-ISRO), Dehradun</i><br />Email : manaruchimohapatra@gmail.com</font></p>
 		   
 		  
@@ -101,16 +101,58 @@
 		  <p><b>Dr Bhaskar R Nikam</b><br /> <font size="2"><i>Scientist/Engineer – ‘SE’, Water Resources Department, Indian Institute of Remote Sensing, Dehradun</i><br />E-mail : bhaskarnikam@iirs.gov.in</font></p>
 		  
 		  <br />
-		  <h2>Misc Information</h2><br /> 
+		  
+		  <h3>Computational Methodology</h3><br />
+		  <p><center><img src="methodology.jpg" height = 120% width = 80%></center></p><br />
+		  
+		  <br />
+		  
+		  <h3>Interface - SPI Utility for Raster</h3><br />
+		  <p><center><img src="step1.jpg" height = 80% width = 60%></center></p><br />
+		  <p><center><img src="step2.jpg" height = 80% width = 60%></center></p><br />
+		  <p><center><img src="step3.jpg" height = 80% width = 60%></center></p><br />
+		  
+		  <br />
+		  
+		  <h3>Interface - SPI Utility for Point Data</h3><br />
+		  <p><center><img src="step4.jpg" height = 80% width = 60%></center></p><br />
+		  <p><center><img src="step5.jpg" height = 80% width = 60%></center></p><br />
+		 
+		  
+		  
+		  <h3>Misc Information</h3><br /> 
 		  <p>The SPI Utility plugin is maintained by Manaruchi Mohapatra, Indian Institute of
 Remote Sensing (IIRS-ISRO), Dehradun. For feedbacks, supports and queries please
 drop a mail at manaruchimohapatra@gmail.com. The tool is free to use, but an
 acknowledgment to SPI Utility will be appreciated. </p>
 		  
 		  <br />
-		  <h2>Links</h2><br />
-          <p><a href="https://github.com/manaruchi/SPIUtility" class="btn btn-primary px-4 py-3">Download SPIUtility</a> <a href="https://plugins.qgis.org/plugins/SPIUtility/" class="btn btn-primary px-4 py-3">SPIUtility on Plugin Repository</a> <a href="user_manual_spiutility.pdf" class="btn btn-primary px-4 py-3">User Guide</a></p>
-        
+		  <h3>Links</h3><br />
+          <p><a href="https://github.com/manaruchi/SPIUtility" class="btn btn-primary px-4 py-3">Download SPIUtility</a> <a href="https://plugins.qgis.org/plugins/SPIUtility/" class="btn btn-primary px-4 py-3">SPIUtility on Plugin Repository</a> <a href="user_manual_spiutility.pdf" class="btn btn-primary px-4 py-3">User Guide</a> </p>
+		 
+		 <br />
+		  
+		  <h3>References</h3><br />
+		  
+		  <p>Abramowitz, M., & Stegun, I. A. (1965). Handbook of mathematical functions: with formulas, graphs, and mathematical tables (Vol. 55). Courier Corporation.</p>
+<p>Asadi Zarch, M. A., Sivakumar, B., & Sharma, A. (2015). Droughts in a warming climate: A global assessment of Standardized precipitation index (SPI) and Reconnaissance drought index (RDI). Journal of Hydrology, 526, 183–195. https://doi.org/10.1016/j.jhydrol.2014.09.071</p>
+<p>Ashouri, H., Hsu, K. L., Sorooshian, S., Braithwaite, D. K., Knapp, K. R., Cecil, L. D., … Prat, O. P. (2015). PERSIANN-CDR: Daily precipitation climate data record from multisatellite observations for hydrological and climate studies. Bulletin of the American Meteorological Society, 96(1), 69–83. https://doi.org/10.1175/BAMS-D-13-00068.1</p>
+<p>Brown, J. F., Wardlow, B. D., Tadesse, T., Hayes, M. J., & Reed, B. C. (2008). The Vegetation Drought Response Index (VegDRI): A new integrated approach for monitoring drought stress in vegetation. GIScience and Remote Sensing, 45(1), 16–46. https://doi.org/10.2747/1548-1603.45.1.16</p>
+<p>Compo, G. P., Whitaker, J. S., Sardeshmukh, P. D., Matsui, N., Allan, R. J., Yin, X., … Worley, S. J. (2011). The Twentieth Century Reanalysis Project. Quarterly Journal of the Royal Meteorological Society, 137(654), 1–28. https://doi.org/10.1002/qj.776</p>
+<p>Dee, D. P., Uppala, S. M., Simmons, A. J., Berrisford, P., Poli, P., Kobayashi, S., … Vitart, F. (2011). The ERA-Interim reanalysis: Configuration and performance of the data assimilation system. Quarterly Journal of the Royal Meteorological Society, 137(656), 553–597. https://doi.org/10.1002/qj.828</p>
+<p>Dutta, D., Kundu, A., Patel, N. R., Saha, S. K., & Siddiqui, A. R. (2015). Assessment of agricultural drought in Rajasthan (India) using remote sensing derived Vegetation Condition Index (VCI) and Standardized Precipitation Index (SPI). Egyptian Journal of Remote Sensing and Space Science, 18(1), 53–63. https://doi.org/10.1016/j.ejrs.2015.03.006</p>
+<p>Hayes, M. J., Wilhite, D. A., & Vanyarkho, O. V. (1996). Monitoring the 1996 Drought Using the Standardized Precipitation Index. Bulletin of the American Meteorological Society, (November 1998), 429–438.</p>
+<p>Huffman, G. J., Adler, R. F., Bolvin, D. T., Gu, G., Nelkin, E. J., Bowman, K. P., … Wolff, D. B. (2007). The TRMM Multisatellite Precipitation Analysis (TMPA): Quasi-global, multiyear, combined-sensor precipitation estimates at fine scales. Journal of Hydrometeorology, 8(1), 38–55. https://doi.org/10.1175/JHM560.1</p>
+<p>Joseph, R., Smith, T. M., Sapiano, M. R. P., & Ferraro, R. R. (2009). A new high-resolution satellite-derived precipitation dataset for climate studies. Journal of Hydrometeorology, 10(4), 935–952. https://doi.org/10.1175/2009JHM1096.1</p>
+<p>Joyce, R. J., Janowiak, J. E., Arkin, P. A., & Xie, P. (2004). CMORPH: A method that produces global precipitation estimates from passive microwave and infrared data at high spatial and temporal resolution. Journal of Hydrometeorology, 5(3), 487–503. https://doi.org/10.1175/1525-7541(2004)005<0487:CAMTPG>2.0.CO;2</p>
+<p>McKee, T. B., Doesken, N. J., & Kleist, J. (1993). A drought climatology for Europe. Eighth Conference on Applied Climatology, 17(23), 179–186. https://doi.org/10.1002/joc.846</p>
+<p>Mishra, A. K., & Singh, V. P. (2011). Drought modeling - A review. Journal of Hydrology, 403(1–2), 157–175. https://doi.org/10.1016/j.jhydrol.2011.03.049</p>
+<p>Schamm, K., Ziese, M., Raykova, K., Becker, A. N., jur Finger, P. D., Meyer-Christoffer, A., & Schneider, U. (2016). GPCC Full Data Daily Version 1.0: Daily Land-Surface Precipitation from Rain Gauges built on GTS based and Historic Data.</p>
+<p>Shah, R., Bharadiya, N., & Manekar, V. (2015). Drought Index Computation Using Standardized Precipitation Index (SPI) Method For Surat District, Gujarat. Aquatic Procedia, 4(Icwrcoe), 1243–1249. https://doi.org/10.1016/j.aqpro.2015.02.162</p>
+<p>Thomas, T., Nayak, P. C., & Ghosh, N. C. (2015). Spatiotemporal analysis of drought characteristics in the bundelkhand region of central india using the standardized precipitation index. Journal of Hydrologic Engineering, 20(11), 1–12. https://doi.org/10.1061/(ASCE)HE.1943-5584.0001189</p>
+
+
+		 
       
     </div>
 
