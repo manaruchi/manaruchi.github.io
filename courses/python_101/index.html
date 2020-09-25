@@ -50,33 +50,55 @@
 
   <header class="bg-dark text-white" style="background-image: url('bg.jpg');">
     <div class="container text-center">
-      <h1 style="font-family: 'Source Code Pro', monospace; font-size: 5rem; background-color: #FFA500;"><font color= 'black'>Introduction to Python</font></h1>
-      <p class="lead" style="font-family: 'Source Code Pro', monospace; font-size: 2rem; color: #FFA500; padding-top: 10px">1st October, 2020 - 4th October, 2020</p><br />
-      <button type="button" class="btn btn-dark" style="font-family: 'Source Code Pro', monospace; font-size: 1.5rem; color: #FFA500; padding-top: 10px">Register Now</button>
+      <h1 style="font-family: 'Source Code Pro', monospace; font-size: 3rem; background-color: #FFA500;"><font color= 'black'>Introduction to Python</font></h1>
+      <p class="lead" style="font-family: 'Source Code Pro', monospace; font-size: 1.5rem; color: #FFA500; padding-top: 10px">3-4th Oct & 10-11th Oct</p><br />
+      <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" style="font-family: 'Source Code Pro', monospace; font-size: 1.5rem; color: #FFA500; padding-top: 10px">Register Now</button>
+
+
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel" style = "font-family: 'Source Code Pro', monospace; font-size: 1.2rem; color: #FFA500;">Register Now</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body" style = "font-family: 'Source Code Pro', monospace; font-size: 1rem; color: #000000;">
+              You will be redirected to a payment page. After a successful payment, you will be able to register for the workshop.
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal" style = "font-family: 'Source Code Pro', monospace; font-size: 1rem; ">Back</button>
+              <a type="button" class="btn btn-success" href = 'https://rzp.io/l/rbspl' style = "font-family: 'Source Code Pro', monospace; font-size: 1rem; ">Proceed</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </header>
-  <div class="alert alert-danger" role="alert" style="text-align: center; font-family: 'Source Code Pro', monospace;">
-    Registration closes on <b>27th September, 2020 </b>. Register now to avoid last minute rush.
-  </div>
+  
   <section id="about" style="padding: 80px;">
 
     <div class="container">
 
 
       <div class="row">
-        <div class="col">
-          <div class="col-lg-12 mx-auto" style = "padding-right:20px;">
-            <h2 style="font-family: 'Source Code Pro', monospace; font-size: 3rem; color: #FFA500;">About the Course</h2>
+
+          <div class="col " style = "padding-right:20px;">
+            <h2 style="font-family: 'Source Code Pro', monospace; font-size: 3rem; color: #FFA500;">About the Workshop</h2>
             <p class="lead" style="font-family: 'Source Code Pro', monospace; text-align: justify; padding-right: 40px; font-size: 1rem;">Python has been a popular programming language with a constantly growing userbase. Today, Python is being used for each and every aspect of computation; from a simple mathematics project to large scale climate models. Python is intuitive, easy-to-learn and powerful.
               This introductory course on Python will make you ready to be a part of the Python community; equipping you with the tools and concepts necessary. We make no assumptions about the participants. The course materials have been moulded by keeping a beginner into mind; so anyone with an interest to learn Python can attend this webinar.
               <br />We, here at RBS are passionate about disseminating knowledge and we thrive to deliver the best.
             </p>
 
-          </div>
+
 
         </div>
-        <div class="col col-lg-4" style="padding-top: 20px;">
 
+        <br /><br />
+
+        <div class="row" style="margin-right: auto; margin-left: auto; padding-top: 50px">
 
 
           <div class="card text-white bg-secondary mb-3">
@@ -87,7 +109,9 @@
 
                 <ul style="font-family: 'Source Code Pro', monospace;">
                   <li>4 days webinar traning</li>
-                  <li>2 hours per day</li>
+                  <li>Total Classroom Hours : 9 hours (Interaction: 1-2 hours)</li>
+                  <li>Assignments: 2 group assignments</li>
+                  <li>Quizzes: 2 individual quizzes</li>
                   <li>No prerequisites</li>
                   <li>Suitable for absolute beginners</li>
                   <li>Practice with the instructors while learning</li>
@@ -100,9 +124,15 @@
 
 
               </p><center>
-              <button type="button" class="btn btn-warning" style="font-family: 'Source Code Pro', monospace; font-size: 1rem; color: #FFA500; padding-top: 10px"><font color='black'>Register Now</font></button></center>
+              <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal" style="font-family: 'Source Code Pro', monospace; font-size: 1rem; color: #FFA500; padding-top: 10px"><font color='black'>Register Now</font></button></center>
             </div>
           </div>
+
+
+          </div>
+
+
+
 
 
 
@@ -117,7 +147,7 @@
   <section id="services" class="bg-dark">
     <div class="container">
       <div class="row">
-        <div class="col-lg-12 mx-auto">
+        <div class="col">
           <h2 style="font-family: 'Source Code Pro', monospace; font-size: 3rem; color: #FFA500;">Topics to be covered</h2>
           <div class="row" style = "padding-top: 20px;">
             <div class="col">
@@ -136,6 +166,10 @@
                 </div>
               </div>
             </div>
+          </div>
+
+
+            <div class="row" style = "padding-top: 20px;">
             <div class="col">
               <div class="card text-black bg-success mb-3">
                 <h5 class="card-header" style="font-family: 'Source Code Pro', monospace; text-align: center">Day 2</h5>
@@ -154,6 +188,7 @@
 
 
           </div>
+
           <div class="row" style = "padding-top: 20px;">
             <div class="col">
               <div class="card text-black bg-warning mb-3">
@@ -170,6 +205,10 @@
                 </div>
               </div>
             </div>
+          </div>
+
+
+            <div class="row" style = "padding-top: 20px;">
             <div class="col">
               <div class="card text-black bg-info mb-3">
                 <h5 class="card-header" style="font-family: 'Source Code Pro', monospace; text-align: center">Day 4</h5>
@@ -184,6 +223,21 @@
 
                 </div>
               </div>
+            </div>
+
+
+          </div>
+
+
+
+
+        </div>
+
+
+
+
+
+            </div>
       </div>
     </div>
   </section>
