@@ -72,6 +72,9 @@ with open(os.path.join(cur_folder, 'streams', '2019.geojson')) as f:
     stream_json['2019'] = json.load(f)
 
 pumps_df = pd.read_csv(os.path.join(cur_folder, 'Jal Location.csv'))
+oht_df = pd.read_csv(os.path.join(cur_folder, 'oht.csv'))
+well_df = pd.read_csv(os.path.join(cur_folder, 'well.csv'))
+
 
 # ## Initiate the Mapbox Object in order to plot the JSON file
 
@@ -503,6 +506,8 @@ def select_ground_water16(n1,n2,n3,n4,n5,n6,n7):
     if(n7):
         return [{"label": "Overview", "value": "overview"},
                 {"label": "Pump Locations", "value": "pump"},
+                {"label": "Overhead Tanks", "value": "oht"},
+                {"label": "Tube Wells", "value": "well"},
                 ]
 
     if(n3):
@@ -636,7 +641,31 @@ def select_ground_water18(selected_val, zoneshow, op, bmap):
                         color_continuous_scale=px.colors.cyclical.IceFire, size_max=30, zoom=10,
                         color = 'Zone')
 
+        elif(selected_val == 'oht'):
 
+
+
+            fig = px.scatter_mapbox(oht_df, lat="Lat", lon="Long", hover_name = oht_df['OHT'].values, hover_data = {'Year of Construction': oht_df['Year'],
+
+                                                                                                              'Inlet Line Size (mm)': oht_df['Inlet Line Size mm'],
+                                                                                                              'Delivery Line': oht_df['Delivery_line'],
+
+                                                                                                              },
+                        color_continuous_scale=px.colors.cyclical.IceFire, size_max=30, zoom=10,
+                        color = 'Division')
+
+        elif(selected_val == 'well'):
+
+
+
+            fig = px.scatter_mapbox(well_df, lat="Lat", lon="Long", hover_name = well_df['Tubewell_Name'].values, hover_data = {'Year of Construction': well_df['Year'],
+
+                                                                                                              'Q (lpm)': well_df['Q_lpm'],
+                                                                                                              'Motor Power (HP)': well_df['Motor_HP'],
+
+                                                                                                              },
+                        color_continuous_scale=px.colors.cyclical.IceFire, size_max=30, zoom=10,
+                        color = 'Division')
 
 
         fig.update_layout(mapbox_style=bmap,
@@ -2449,7 +2478,7 @@ def routandloadcontent(path):
 
 
 if(__name__ == '__main__'):
-    app.run_server()
+    app.run_server(host='0.0.0.0',port=80)
 
 
 # Designed by Manaruchi Mohapatra (manaruchimohapatra@gmail.com)
