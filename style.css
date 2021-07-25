@@ -2,7 +2,7 @@
 
 body {
   margin: 0;
-  font:normal 75% Arial, Helvetica, sans-serif;
+
 }
 
 canvas {
@@ -16,8 +16,8 @@ canvas {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: #79808c;
-  background-image: url("");
+  background-color: #8BC6EC;
+  background-image: url('bg.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50% 50%;
@@ -57,4 +57,61 @@ canvas {
 
 .count-particles{
   border-radius: 0 0 3px 3px;
+}
+#main-container{
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 2.5%;
+  width: 90%;
+  height: 90%;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+  flex-flow: row wrap;
+}
+
+
+
+#myname{
+  font-family: 'Comfortaa', cursive;
+  color: white;
+  font-weight: bold;
+  font-size: 40px;
+  text-align: center;
+  width: 100%;
+  margin-top: 30px;
+}
+
+#link-buttons{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+#contact-buttons{
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+#aboutme{
+  margin: 20px;
+  color: white;
+  text-align: center;
+  font-family: 'Comfortaa', cursive;
+  width: 60%;
+  font-size: 18px;
+  line-height: 200%;
+}
+
+mark {
+  background-color: white;
+  color: black;
 }
