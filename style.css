@@ -1,0 +1,87 @@
+body{
+  background-image: linear-gradient(to right, #8360c3, #2ebf91);
+  font-family: 'Rubik', sans-serif;
+}
+
+#header{
+  text-align: center;
+  background-color: black;
+  color: white;
+  padding: 10px;
+  background-image: linear-gradient(to right, #434343 0%, black 100%);
+  font-size: large;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+#header2{
+  text-align: center;
+  background-color: black;
+  color: white;
+  background: gray;
+  font-size: large;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.buttons{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.small-button{
+    background-color: grey;
+    margin: 10px;
+    border-radius: 10px;
+    transition: background-color 0.5s;
+    cursor: pointer;
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
+.small-button:hover{
+    background-color: black;
+}
+
+.icons{
+  width: 60px;
+}
+
+.icon-text{
+  color: white;
+}
+
+.windcharts{
+  width: 100%;
+}
+
+.utc_active{
+  background: black;
+  height: 40px;
+  text-align: center;
+  padding-top: 15px;
+  border-radius: 10px;
+}
+
+.utc_inactive{
+  background: gray;
+  height: 40px;
+  text-align: center;
+  padding-top: 15px;
+  border-radius: 10px;
+  color: black;
+  transition: background-color 0.5s, color 0.5s;
+}
+
+.utc_inactive:hover{
+  background: black;
+  color: white;
+
+}
+
+.cap{
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
