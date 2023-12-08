@@ -23,7 +23,7 @@ body{
   border-radius: 10px;
   margin-bottom: 10px;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 
 .buttons{
@@ -66,7 +66,10 @@ body{
 }
 
 .windcharts{
-  width: 100%;
+  width: 550px;
+  height: 550px;
+  object-fit: cover;
+  object-position: 85% 85%;
 }
 
 .utc_active{
@@ -96,4 +99,39 @@ body{
 .cap{
   margin-top: 5px;
   margin-bottom: 5px;
+}
+
+#gallery{
+  display: grid;
+  grid-template-columns: 600px 600px;
+  row-gap:  5px;
+  column-gap: 5px;
+  width: 1210px;
+  margin: auto;
+}
+
+.picpic{
+  width: 600px;
+  height: 500px;
+  overflow: hidden;
+  z-index: 1;
+  position: relative;
+}
+
+.imgimgimg{
+  margin: -650px 0px 0px -800px;
+  width: 2500px;
+  z-index: 1;
+  position: absolute;
+}
+
+.piccap{
+  background-color: yellow;
+  z-index: 100;
+  left: 0px;
+  top: 0px;
+  position: absolute;
+  width: 70px;
+  font-size: 20px;
+  padding: 10px;
 }
