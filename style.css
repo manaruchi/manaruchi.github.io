@@ -26,6 +26,18 @@ body{
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 
+ #header2a{
+    text-align: center;
+    background-color: black;
+    color: white;
+    background: gray;
+    font-size: large;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+
 .buttons{
   display: grid;
   grid-template-columns: 1fr 1fr;
