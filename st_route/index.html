@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+
+     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+
+     <style>
+        body { margin: 0;}
+        #map { height: 100vh; }
+        #route {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            z-index: 1000;
+            height: 150px;
+            width: 500px;
+            background-color: black;
+            border-radius: 10px;
+            opacity: 80%;
+            padding: 10px;
+        }
+        #routestring{
+            width: calc(100% - 10px);
+            height: 100px;
+
+        }
+        #plotRoute {
+            width: calc(100% - 5px);
+            padding: 10px;
+            background-color: rgb(38, 37, 37);
+            color: white;
+            border: none;
+            border-radius: 5px;
+
+        }
+        #plotRoute:hover{
+            background-color: rgb(63, 63, 63);
+        }
+        .my_polyline { 
+            stroke: lightgreen;
+            fill: none;
+            stroke-dasharray: 10,10; 
+            stroke-width: 5;  
+            stroke-linecap: round;
+            animation: dashmove 1s linear infinite;
+        }
+
+        @keyframes dashmove {
+            to {
+            stroke-dashoffset: -15;
+            }
+        }
+
+        .text-label {
+            color: yellow;
+            font-size: 16px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .cost_label {
+            font-weight: bold;
+        }
+
+        .cost_value {
+            text-align: left;
+        }
+
+
+     </style>
+     <link rel="stylesheet" href="./basic-ruler.css">
+</head>
+<body>
+    <div id="map"></div>
+    <div id="route">
+        <textarea type="text" name="" id="routestring">JAM(2246/7001)-BHUJ(2324/6966)-NALIYA(2326/6882)</textarea>
+        <button id="plotRoute" onClick="plotRouteFunc()">Plot Route</button>
+    </div>
+
+    <script type="text/javascript" src="./basic-ruler.js"></script>
+    <script>
+        var map = L.map('map').setView([22.4663,71.0118], 8);
+
+
+        L.tileLayer("http://mt0.google.com/vt/lyrs=y&hl=en&x={x}&y={y}&z={z}", {
+            maxZoom: 19,attribution: 'Google'}).addTo(map);
+
+        var cost_underground = 12.55,
+        cost_above_ground = 17.89,
+        html = [
+            '<table>',
+            ' <tr><td class="cost_label">Cost Above Ground:</td><td class="cost_value">${total_above_ground}</td></tr>',
+            ' <tr><td class="cost_label">Cost Underground:</td><td class="cost_value">${total_underground}</td></tr>',
+            '</table>'
+        ].join(''),
+        numberWithCommas = function(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        };
+
+        var Core = L.Control.LinearCore.extend({
+            onSelect: function(e){
+
+                if(!e.total){
+                return;
+                }
+
+                var distance = e.total.scalar;
+
+                if(e.total.unit === 'mi'){
+                    distance *= e.sub_unit;
+
+                } else if(e.total.unit === 'km'){
+                    distance *= 3280.84;
+
+                } else if(e.total.unit === 'm'){
+                    distance *= 3.28084;
+                }
+
+                var data = {
+                    total_above_ground: numberWithCommas(L.Util.formatNum(cost_above_ground * distance, 2)),
+                    total_underground: numberWithCommas(L.Util.formatNum(cost_underground * distance, 2))
+                };
+
+                if(e.rulerOn){
+                    var content = L.Util.template(html, data),
+                        popup = L.popup().setContent(content);
+
+
+                }
+            }
+        });
+
+        map.addControl(new Core({
+        unitSystem: 'metric',
+        color: '#FF0080',
+        features: ['ruler']
+        }));
+
+        function plotRouteFunc(){
+            var LATLONS = []
+            const route = document.getElementById("routestring");
+            
+            const routeText = route.value.trim();
+
+            routeText.split("-").forEach(d=>{
+                const LOCNAME = d.split("(")[0]
+                const LOCLAT = Number(d.split("(")[1].split("/")[0]) / 100
+                const LOCLON = Number(d.split("(")[1].split("/")[1].split(")")[0]) / 100
+                
+                LATLONS.push([LOCLAT,LOCLON])
+
+                var circle = L.circle([LOCLAT,LOCLON], {
+                    color: 'green',
+                    fillColor: 'green',
+                    fillOpacity: 0.5,
+                    radius: 1000
+                }).bindTooltip(LOCNAME).addTo(map);
+
+                var text = L.marker([LOCLAT - 0.02,LOCLON], {
+                    icon: L.divIcon({
+                        className: 'text-label',
+                        html: LOCNAME,
+                        iconSize: [100, 20],
+                        iconAnchor: [50, 0]
+                    })
+                    }).addTo(map);
+            })
+
+            var ROUTEPOLY = L.polyline(LATLONS, { className: 'my_polyline' }).addTo(map);
+
+            map.fitBounds(ROUTEPOLY.getBounds());
+        }
+        
+
+
+    </script>
+</body>
+</html>
