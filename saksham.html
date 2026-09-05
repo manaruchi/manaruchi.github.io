@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Congratulations on Your Baby Girl</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  font-family: Georgia, "Times New Roman", serif;
+  color: #4a3f45;
+
+  background:
+    radial-gradient(circle at 12% 12%, rgba(255,241,246,.96), transparent 28%),
+    radial-gradient(circle at 88% 88%, rgba(247,229,238,.9), transparent 35%),
+    linear-gradient(135deg, #fffdfd, #f8eef3);
+}
+
+.card {
+  width: min(800px, 100%);
+  background: rgba(255,255,255,.97);
+  border: 1px solid rgba(182,129,151,.23);
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: 0 24px 70px rgba(102,70,83,.16);
+}
+
+.hero {
+  position: relative;
+  min-height: 380px;
+  padding: 18px 18px 0;
+  overflow: hidden;
+  cursor: pointer;
+
+  background:
+    radial-gradient(circle at 50% 45%, rgba(255,255,255,.85), transparent 35%),
+    linear-gradient(#f8eef6, #fff9fc 66%, #f3e4eb 66%);
+}
+
+.hero::after {
+  content: "Hover or tap the little one ♡";
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font: 600 .72rem Arial, sans-serif;
+  letter-spacing: 1px;
+  color: #b28a9c;
+  opacity: .75;
+  white-space: nowrap;
+}
+
+.hero svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 380px;
+}
+
+.content {
+  padding: 36px 48px 48px;
+  text-align: center;
+}
+
+.eyebrow {
+  font-family: Arial, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2.8px;
+  font-size: .72rem;
+  color: #b18196;
+  margin-bottom: 12px;
+}
+
+h1 {
+  font-size: clamp(1.9rem, 5vw, 2.7rem);
+  line-height: 1.18;
+  color: #8d5e74;
+  font-weight: 500;
+}
+
+.subname {
+  margin-top: 8px;
+  font-size: 1.12rem;
+  color: #665760;
+}
+
+.divider {
+  width: 72px;
+  height: 2px;
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      #c391a7,
+      transparent
+    );
+  margin: 23px auto;
+}
+
+.message {
+  max-width: 640px;
+  margin: 0 auto;
+  font-size: 1.13rem;
+  line-height: 1.82;
+  color: #5f5259;
+}
+
+.highlight {
+  display: block;
+  margin-top: 18px;
+  color: #8e6074;
+  font-weight: 700;
+  font-size: 1.18rem;
+}
+
+.quote {
+  max-width: 620px;
+  margin: 18px auto 0;
+  padding: 16px 20px;
+  border-left: 3px solid #d7a8bb;
+  border-right: 3px solid #d7a8bb;
+  border-radius: 16px;
+  background: rgba(249,237,243,.65);
+  color: #745d68;
+  font-style: italic;
+  line-height: 1.7;
+  font-size: 1.01rem;
+}
+
+.wish {
+  margin-top: 26px;
+  color: #73636b;
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+.gift-link {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 13px 30px;
+  border-radius: 999px;
+  text-decoration: none;
+  background: #9b6b80;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  font-size: .95rem;
+  font-weight: 700;
+  letter-spacing: .3px;
+  box-shadow:
+    0 8px 20px rgba(130,88,106,.22);
+
+  transition:
+    background .2s ease,
+    box-shadow .2s ease;
+
+  animation:
+    giftFloat 3s infinite ease-in-out;
+}
+
+.gift-link:hover {
+  background: #805668;
+  box-shadow:
+    0 11px 24px rgba(130,88,106,.3);
+}
+
+.footer {
+  margin-top: 30px;
+  font-family: Arial, sans-serif;
+  font-size: .73rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #aa96a0;
+}
+
+
+/* ============================
+   AMBIENT ANIMATIONS
+   ============================ */
+
+.star {
+  animation:
+    twinkle 2s infinite ease-in-out;
+
+  transform-origin: center;
+}
+
+.star:nth-child(2n) {
+  animation-delay: .5s;
+}
+
+.star:nth-child(3n) {
+  animation-delay: 1s;
+}
+
+.cloud {
+  animation:
+    cloudDrift 7s infinite ease-in-out;
+}
+
+.heart {
+  animation:
+    heartRise 4s infinite ease-in-out;
+
+  opacity: 0;
+}
+
+.h2 {
+  animation-delay: 1.2s;
+}
+
+.h3 {
+  animation-delay: 2.4s;
+}
+
+
+/* ============================
+   BABY ANIMATION
+   ============================ */
+
+.baby-body {
+  transform-origin: 400px 238px;
+
+  animation:
+    breathe 3.2s infinite ease-in-out;
+}
+
+.zzz {
+  animation:
+    zzzFloat 3s infinite ease-in-out;
+}
+
+.zz2 {
+  animation-delay: 1s;
+}
+
+.zz3 {
+  animation-delay: 2s;
+}
+
+
+/* sleeping expression */
+
+.eye-open {
+  opacity: 0;
+}
+
+.sleep-eye {
+  opacity: 1;
+}
+
+.smile {
+  opacity: 0;
+}
+
+.sleep-mouth {
+  opacity: 1;
+}
+
+.cheek {
+  opacity: .42;
+}
+
+
+/* smiling expression */
+
+.hero:hover .eye-open,
+.hero.active .eye-open {
+  opacity: 1;
+}
+
+.hero:hover .sleep-eye,
+.hero.active .sleep-eye {
+  opacity: 0;
+}
+
+.hero:hover .smile,
+.hero.active .smile {
+  opacity: 1;
+}
+
+.hero:hover .sleep-mouth,
+.hero.active .sleep-mouth {
+  opacity: 0;
+}
+
+.hero:hover .cheek,
+.hero.active .cheek {
+  opacity: .9;
+}
+
+.eye-open,
+.sleep-eye,
+.smile,
+.sleep-mouth,
+.cheek {
+  transition:
+    opacity .22s ease;
+}
+
+
+/* Baby happy bounce */
+
+.hero:hover .baby-body,
+.hero.active .baby-body {
+  animation:
+    happyBounce .9s infinite ease-in-out;
+}
+
+
+/* Hide ZZZ while smiling */
+
+.hero:hover .zzz,
+.hero.active .zzz {
+  opacity: 0 !important;
+}
+
+
+/* ============================
+   KEYFRAMES
+   ============================ */
+
+@keyframes twinkle {
+
+  0%, 100% {
+    opacity: .3;
+    transform: scale(.8);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+
+}
+
+
+@keyframes cloudDrift {
+
+  0%, 100% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(12px);
+  }
+
+}
+
+
+@keyframes heartRise {
+
+  0% {
+    opacity: 0;
+    transform:
+      translateY(12px)
+      scale(.8);
+  }
+
+  30% {
+    opacity: .9;
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      translateY(-45px)
+      scale(1.2);
+  }
+
+}
+
+
+@keyframes breathe {
+
+  0%, 100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.018);
+  }
+
+}
+
+
+@keyframes happyBounce {
+
+  0%, 100% {
+    transform:
+      translateY(0)
+      rotate(-.5deg);
+  }
+
+  50% {
+    transform:
+      translateY(-4px)
+      rotate(.5deg);
+  }
+
+}
+
+
+@keyframes zzzFloat {
+
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  30% {
+    opacity: .8;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-18px);
+  }
+
+}
+
+
+@keyframes giftFloat {
+
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
+
+}
+
+
+/* ============================
+   MOBILE
+   ============================ */
+
+@media (max-width: 600px) {
+
+  body {
+    padding: 12px;
+  }
+
+  .hero {
+    min-height: 310px;
+    padding: 10px 8px 0;
+  }
+
+  .hero::after {
+    bottom: 8px;
+    font-size: .66rem;
+  }
+
+  .content {
+    padding:
+      30px
+      22px
+      36px;
+  }
+
+  .message {
+    font-size: 1.05rem;
+  }
+
+  .quote {
+    font-size: .98rem;
+    padding: 16px 15px;
+  }
+
+}
+
+
+/* Accessibility */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+
+}
+</style>
+</head>
+
+
+<body>
+
+<main class="card">
+
+
+<!-- ==============================
+     INTERACTIVE BABY PANEL
+     ============================== -->
+
+<section
+  class="hero"
+  id="babyHero"
+  aria-label="Sleeping baby girl. Hover or tap to make her smile and giggle."
+>
+
+<svg
+  viewBox="0 0 800 390"
+  role="img"
+  aria-labelledby="title desc"
+>
+
+<title id="title">
+Sleeping baby girl
+</title>
+
+<desc id="desc">
+A sleeping baby girl under a soft blanket.
+She opens her eyes and smiles when hovered or tapped.
+</desc>
+
+
+
+<!-- STARS -->
+
+<g fill="#d9ad66">
+
+<circle
+  class="star"
+  cx="115"
+  cy="72"
+  r="5"
+/>
+
+<circle
+  class="star"
+  cx="168"
+  cy="48"
+  r="4"
+/>
+
+<circle
+  class="star"
+  cx="215"
+  cy="92"
+  r="5"
+/>
+
+<circle
+  class="star"
+  cx="592"
+  cy="58"
+  r="5"
+/>
+
+<circle
+  class="star"
+  cx="646"
+  cy="92"
+  r="4"
+/>
+
+<circle
+  class="star"
+  cx="696"
+  cy="54"
+  r="5"
+/>
+
+</g>
+
+
+
+<!-- MOON -->
+
+<path
+  d="
+    M651 122
+    C617 109,611 67,636 45
+    C615 80,638 116,676 113
+    C668 120,659 123,651 122Z
+  "
+  fill="#ead08e"
+/>
+
+
+
+<!-- CLOUD -->
+
+<g
+  class="cloud"
+  fill="#ffffff"
+  opacity=".93"
+>
+
+<ellipse
+  cx="245"
+  cy="98"
+  rx="48"
+  ry="18"
+/>
+
+<ellipse
+  cx="286"
+  cy="92"
+  rx="38"
+  ry="24"
+/>
+
+<ellipse
+  cx="323"
+  cy="101"
+  rx="44"
+  ry="18"
+/>
+
+</g>
+
+
+
+<!-- HEARTS -->
+
+<g fill="#db92ad">
+
+<path
+  class="heart"
+  d="
+    M555 234
+    C555 226 565 223 570 229
+    C575 223 585 226 585 234
+    C585 243 570 252 570 252
+    C570 252 555 243 555 234Z
+  "
+/>
+
+<path
+  class="heart h2"
+  d="
+    M589 207
+    C589 201 597 198 601 203
+    C605 198 613 201 613 207
+    C613 214 601 221 601 221
+    C601 221 589 214 589 207Z
+  "
+/>
+
+<path
+  class="heart h3"
+  d="
+    M230 242
+    C230 235 239 232 244 237
+    C249 232 258 235 258 242
+    C258 250 244 259 244 259
+    C244 259 230 250 230 242Z
+  "
+/>
+
+</g>
+
+
+
+<!-- PILLOW -->
+
+<ellipse
+  cx="400"
+  cy="255"
+  rx="168"
+  ry="63"
+  fill="#f3dce6"
+/>
+
+<ellipse
+  cx="400"
+  cy="250"
+  rx="153"
+  ry="51"
+  fill="#faedf3"
+/>
+
+
+
+<!-- ==============================
+     BABY GIRL
+     ============================== -->
+
+<g class="baby-body">
+
+
+<!-- BLANKET -->
+
+<path
+  d="
+    M314 252
+    Q400 221 486 252
+    L468 318
+    Q400 346 332 318
+    Z
+  "
+  fill="#eebfd0"
+  stroke="#d29bad"
+  stroke-width="3"
+/>
+
+
+<path
+  d="
+    M330 262
+    Q400 238 470 262
+    L458 302
+    Q400 324 342 302
+    Z
+  "
+  fill="#f9e5ec"
+/>
+
+
+
+<!-- HEAD -->
+
+<circle
+  cx="400"
+  cy="211"
+  r="58"
+  fill="#e7b688"
+/>
+
+
+
+<!-- HAIR -->
+
+<path
+  d="
+    M346 207
+    Q351 156 401 151
+    Q450 154 455 207
+    Q440 179 410 177
+    Q376 173 346 207Z
+  "
+  fill="#6a4e41"
+/>
+
+
+
+<!-- BOW -->
+
+<circle
+  cx="447"
+  cy="167"
+  r="7"
+  fill="#d783a2"
+/>
+
+<path
+  d="
+    M440 167
+    Q428 156 432 148
+    Q444 151 448 162Z
+  "
+  fill="#d783a2"
+/>
+
+<path
+  d="
+    M454 167
+    Q466 156 462 148
+    Q450 151 446 162Z
+  "
+  fill="#d783a2"
+/>
+
+
+
+<!-- SLEEPING EYES -->
+
+<path
+  class="sleep-eye"
+  d="
+    M370 212
+    Q379 220 388 212
+  "
+  fill="none"
+  stroke="#5f453d"
+  stroke-width="4"
+  stroke-linecap="round"
+/>
+
+
+<path
+  class="sleep-eye"
+  d="
+    M412 212
+    Q421 220 430 212
+  "
+  fill="none"
+  stroke="#5f453d"
+  stroke-width="4"
+  stroke-linecap="round"
+/>
+
+
+
+<!-- OPEN EYES -->
+
+<g class="eye-open">
+
+<ellipse
+  cx="379"
+  cy="213"
+  rx="6"
+  ry="8"
+  fill="#49342d"
+/>
+
+<ellipse
+  cx="421"
+  cy="213"
+  rx="6"
+  ry="8"
+  fill="#49342d"
+/>
+
+<circle
+  cx="381"
+  cy="210"
+  r="2"
+  fill="#ffffff"
+/>
+
+<circle
+  cx="423"
+  cy="210"
+  r="2"
+  fill="#ffffff"
+/>
+
+</g>
+
+
+
+<!-- CHEEKS -->
+
+<ellipse
+  class="cheek"
+  cx="361"
+  cy="232"
+  rx="13"
+  ry="7"
+  fill="#e996a4"
+/>
+
+<ellipse
+  class="cheek"
+  cx="439"
+  cy="232"
+  rx="13"
+  ry="7"
+  fill="#e996a4"
+/>
+
+
+
+<!-- SLEEPING MOUTH -->
+
+<path
+  class="sleep-mouth"
+  d="
+    M392 237
+    Q400 241 408 237
+  "
+  fill="none"
+  stroke="#a9636f"
+  stroke-width="3"
+  stroke-linecap="round"
+/>
+
+
+
+<!-- SMILING MOUTH -->
+
+<path
+  class="smile"
+  d="
+    M389 236
+    Q400 250 411 236
+  "
+  fill="none"
+  stroke="#a65365"
+  stroke-width="4"
+  stroke-linecap="round"
+/>
+
+
+
+<!-- LITTLE HANDS -->
+
+<circle
+  cx="344"
+  cy="266"
+  r="12"
+  fill="#e7b688"
+/>
+
+<circle
+  cx="456"
+  cy="266"
+  r="12"
+  fill="#e7b688"
+/>
+
+</g>
+
+
+
+<!-- ZZZ -->
+
+<g
+  fill="#a98ba0"
+  font-family="Arial, sans-serif"
+  font-weight="700"
+>
+
+<text
+  class="zzz"
+  x="500"
+  y="165"
+  font-size="18"
+>
+z
+</text>
+
+<text
+  class="zzz zz2"
+  x="520"
+  y="145"
+  font-size="23"
+>
+z
+</text>
+
+<text
+  class="zzz zz3"
+  x="545"
+  y="120"
+  font-size="29"
+>
+Z
+</text>
+
+</g>
+
+
+
+<!-- GROUND -->
+
+<path
+  d="
+    M0 327
+    C150 304,270 330,400 318
+    C545 305,665 307,800 329
+    L800 390
+    L0 390 Z
+  "
+  fill="#eadde3"
+/>
+
+</svg>
+
+</section>
+
+
+
+<!-- ==============================
+     GREETING
+     ============================== -->
+
+<section class="content">
+
+
+<div class="eyebrow">
+A Beautiful New Beginning
+</div>
+
+
+<h1>
+Heartiest Congratulations!
+</h1>
+
+
+<div class="subname">
+Flt Lt &amp; Mrs Saksham Rawal
+</div>
+
+
+<div class="divider"></div>
+
+
+<p class="message">
+
+On the arrival of your precious first baby girl,
+may your home be filled with a new kind of joy,
+countless little smiles, and memories that grow
+more beautiful with every passing day.
+
+<span class="highlight">
+
+Wishing your little princess a life filled with
+love, good health, happiness, and endless blessings.
+
+</span>
+
+</p>
+
+
+<div class="quote">
+
+“A daughter is a little miracle who brings a lifetime
+of wonder, laughter, tenderness, and love into a home.”
+
+</div>
+
+
+<div class="quote">
+
+“Some of life’s greatest joys arrive in the smallest little hands.”
+
+</div>
+
+
+<p class="wish">
+
+With heartfelt wishes, warm congratulations,
+and lots of love
+
+<br>
+
+from the <strong>entire OSG family</strong>.
+
+</p>
+
+
+
+<a
+  class="gift-link"
+  href="YOUR_AMAZON_GIFT_CARD_LINK_HERE"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+
+A Little Something for the Little One 🎁
+
+</a>
+
+
+<div class="footer">
+
+With Love &amp; Best Wishes · OSG Family
+
+</div>
+
+
+</section>
+
+</main>
+
+
+
+<!-- ==============================
+     BABY GIGGLE SOUND
+     ============================== -->
+
+<audio
+  id="babyGiggle"
+  preload="auto"
+>
+
+<source
+  src="baby-giggle.mp3"
+  type="audio/mpeg"
+>
+
+</audio>
+
+
+
+<script>
+
+const hero =
+  document.getElementById("babyHero");
+
+const giggle =
+  document.getElementById("babyGiggle");
+
+let lastSound = 0;
+
+let smileTimer;
+
+
+/* ==============================
+   PLAY BABY GIGGLE
+   ============================== */
+
+function playGiggle() {
+
+  const now =
+    Date.now();
+
+
+  /*
+   Prevent sound from repeatedly
+   triggering if the mouse moves
+   rapidly in and out.
+  */
+
+  if (now - lastSound < 1800) {
+    return;
+  }
+
+
+  lastSound =
+    now;
+
+
+  try {
+
+    giggle.pause();
+
+    giggle.currentTime =
+      0;
+
+
+    /*
+    Keep the giggle soft.
+    Change between 0 and 1.
+    */
+
+    giggle.volume =
+      0.65;
+
+
+    giggle
+      .play()
+      .catch(() => {
+
+        /*
+        Mobile browsers may require
+        the user to tap first.
+        */
+
+      });
+
+  }
+
+  catch (error) {
+
+    console.log(
+      "Audio could not be played."
+    );
+
+  }
+
+}
+
+
+
+/* ==============================
+   SMILE
+   ============================== */
+
+function makeBabySmile() {
+
+  hero
+    .classList
+    .add("active");
+
+
+  playGiggle();
+
+
+  clearTimeout(
+    smileTimer
+  );
+
+
+  smileTimer =
+    setTimeout(() => {
+
+      hero
+        .classList
+        .remove("active");
+
+    }, 2200);
+
+}
+
+
+
+/* ==============================
+   DESKTOP HOVER
+   ============================== */
+
+hero.addEventListener(
+  "mouseenter",
+  () => {
+
+    makeBabySmile();
+
+  }
+);
+
+
+
+hero.addEventListener(
+  "mouseleave",
+  () => {
+
+    clearTimeout(
+      smileTimer
+    );
+
+
+    hero
+      .classList
+      .remove("active");
+
+  }
+);
+
+
+
+/* ==============================
+   MOBILE / TABLET TAP
+   ============================== */
+
+hero.addEventListener(
+  "click",
+  () => {
+
+    makeBabySmile();
+
+  }
+);
+
+
+
+/* ==============================
+   MOBILE AUDIO UNLOCK
+   ============================== */
+
+/*
+Some mobile browsers do not allow
+sound until a user has interacted
+with the page.
+
+The first touch prepares the audio.
+*/
+
+document.addEventListener(
+  "touchstart",
+
+  () => {
+
+    giggle
+      .load();
+
+  },
+
+  {
+    once: true
+  }
+
+);
+
+</script>
+
+</body>
+</html>
