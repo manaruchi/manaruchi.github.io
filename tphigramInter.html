@@ -1,0 +1,309 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Interactive Tephigram — Manaruchi Mohapatra</title><script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script><style>
+:root{font-family:system-ui,Segoe UI,sans-serif;color:#e5e7eb;background:#0b1220}*{box-sizing:border-box}body{margin:0}.top{background:#111c30;color:white;padding:12px 18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}.top h2{font-size:18px;margin:0 16px 0 0}.top button{min-width:38px;font-size:18px;line-height:1.1}.top button:focus-visible{outline:2px solid #93c5fd;outline-offset:2px}.top button,.top select{border:1px solid #bac6d5;border-radius:7px;padding:8px 11px;background:#1c2c44;color:#e2e8f0;cursor:pointer}.top button.active{background:#244b78;border-color:#60a5fa;color:#fff}.layout{display:flex;align-items:stretch;height:calc(100dvh - 62px)}.main{flex:1;min-width:0;padding:0;height:100%}.panel{width:440px;overflow-y:auto;background:#111c30;color:#e2e8f0;border-left:1px solid #34445d;padding:15px;transition:width .2s,padding .2s;overflow-y:auto;overflow-x:hidden}.panel.closed{width:0;padding:0;border:0;overflow:hidden}.panel h3{margin:0 0 12px}.panel label{display:block;font-size:12px;margin:10px 0 3px}.panel input{width:100%;padding:8px;border:1px solid #475569;border-radius:5px;background:#1c2c44;color:#f8fafc}.panel button{padding:8px;margin-top:10px;background:#243750;color:#e2e8f0;border:1px solid #50617a;border-radius:6px;cursor:pointer}.bulk{width:100%;height:220px;font:13px ui-monospace,monospace;resize:vertical;border:1px solid #475569;border-radius:6px;background:#1c2c44;color:#f8fafc;padding:9px;white-space:pre}.bulk-actions{display:flex;gap:8px;flex-wrap:wrap}.panel .bulk-actions button{margin-top:7px}.ref-row{background:#1e3a5f}.thermo-row{display:flex;align-items:center;justify-content:space-between;gap:8px;border-bottom:1px solid #334155;padding:5px 0;font-size:12px}.thermo-row button{margin:0;flex:none}.card{background:white;border:0;border-radius:0;padding:0;overflow:hidden;height:100%}svg{width:100%;height:100%;display:block;touch-action:none;cursor:crosshair}.status{position:fixed;left:0;top:0;display:none;background:#12223eee;color:#fff;padding:8px 11px;border-radius:8px;z-index:30;box-shadow:0 4px 18px #0003;font-variant-numeric:tabular-nums;pointer-events:none;white-space:nowrap;font-size:12px;line-height:1.55}.hint{font-size:12px;color:#475569;margin:8px}.legend{display:flex;gap:18px;font-size:13px;padding:6px 10px;flex-wrap:wrap}.legend span:before{content:'— ';font-weight:900}.blue{color:#2563eb}.red{color:#dc2626}.orange{color:#b45309}.green{color:#15803d}.purple{color:#7c3aed}table{border-collapse:collapse;width:100%;font-size:12px}td,th{padding:5px;border-bottom:1px solid #334155;text-align:right}td:first-child,th:first-child{text-align:left}.muted{color:#a5b4c8;font-size:12px}button:disabled{opacity:.45}
+
+.top button{width:42px;height:40px;min-width:42px;display:inline-flex;align-items:center;justify-content:center;padding:0;flex:0 0 auto;line-height:1}
+.tool-icon{display:block;width:21px;height:21px;flex:none}
+.top{gap:9px}
+.annotation-tools{padding:12px;margin-top:18px;border:1px solid #40516b;border-radius:9px;background:#17263c}
+.annotation-tools h3{margin:0 0 8px}
+.annotation-tools input[type=color]{height:38px;padding:3px;cursor:pointer}
+.annotation-tools button{margin-right:6px}
+.annotation-tools button:disabled{opacity:.4;cursor:not-allowed}
+.annotation-label{cursor:move;paint-order:stroke;user-select:none}
+.annotation-label.selected{stroke:#fff;stroke-width:3px;stroke-opacity:.85}
+</style></head><body><div class="top"><h2>Interactive Tephigram</h2><button id="toggle" title="Open or close the data-entry panel. Enter individual or bulk pressure, dry-bulb and dew-point observations." aria-label="Toggle data-entry panel"><svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><button id="db" class="active" title="Activate dry-bulb plotting (red). Click the chart to add DB points." aria-label="Plot dry-bulb temperature"><svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 18 10 12 15 14 21 5"/><circle cx="10" cy="12" r="2"/></svg></button><button id="wb" title="Activate dew-point plotting (blue). Click the chart to add WB points." aria-label="Plot dew-point temperature"><svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 18 10 12 15 14 21 5"/><circle cx="15" cy="14" r="2"/></svg></button><button id="reference" title="Toggle reference selection: click an existing DB, DP or thermodynamic point to lock or unlock its dry, saturated and mixing-ratio curves." aria-label="Select reference points"><svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></button><button id="thermomode" title="Add an independent thermodynamic point (LCL, LFC, EL, CCL, etc.). Click the chart to place it; use Reference mode to lock its three thermodynamic curves." aria-label="Add thermodynamic point" aria-pressed="false"><svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="5"/></svg></button><button id="removeRef" title="Remove every locked reference point and its three thermodynamic curves, without clearing sounding data." aria-label="Clear all reference points"><svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M7 7l10 10M17 7 7 17"/></svg></button><button id="undo" title="Undo the most recently added observation in the active DB or DP profile." aria-label="Undo last point"><svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5M4 9h10a6 6 0 0 1 0 12h-2"/></svg></button><button id="clear" title="Clear all observations from the active DB or DP profile (asks for confirmation)." aria-label="Clear active profile"><svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 15h10l1-15M10 10v7M14 10v7"/></svg></button><button id="reset" title="Reset the plot to its initial zoom level and position." aria-label="Reset zoom and pan"><svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 15v5h-5M4 4a9 9 0 0 1 15 4M20 20a9 9 0 0 1-15-4"/></svg></button><button id="saveSession" title="Save the complete tephigram session in this browser" aria-label="Save session"><svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h12l4 4v14H3V3h2zM7 3v7h10V3M7 21v-8h10v8"/></svg></button><button id="png" title="Export the current tephigram and profiles as a high-resolution PNG image." aria-label="Export PNG"><svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8" cy="9" r="1"/><path d="m3 17 6-6 4 4 3-3 5 5"/></svg></button><button id="svgexport" title="Export the current tephigram as a scalable vector SVG image." aria-label="Export SVG"><svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M4 17v4h16v-4"/></svg></button><button id="textmode" title="Text annotations: click the chart to insert a label; drag existing labels to reposition them. Select a label to edit its content, color and size in the annotation panel." aria-label="Add or edit text annotations" aria-pressed="false"><svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16M12 5v15M8 20h8"/></svg></button></div><div class="layout"><main class="main"><div class="card"><svg id="chart" viewBox="0 0 1200 800" preserveAspectRatio="none" aria-label="Tephigram"></svg></div></main><aside class="panel closed" id="panel"><h3>Exact sounding values</h3><label>Pressure (hPa)</label><input type="number" id="p" value="850" min="50" max="1100" step="1"><label>Temperature (°C)</label><input type="number" id="t" value="15" step="0.1"><button id="add">Add to active profile</button><h3 style="margin-top:22px">Bulk sounding entry</h3><p class="muted">Paste rows as: Pressure, DB, DP. Commas, tabs, or spaces accepted. Leave a temperature blank if missing (use commas or tabs).</p><textarea id="bulk" class="bulk" spellcheck="false" placeholder="P(hPa),DB(°C),DP(°C)
+1000,28,23
+925,23,19
+850,18,14
+700,8,4
+500,-9,-13"></textarea><div class="bulk-actions"><button id="bulkadd">Plot all rows</button><button id="bulksample">Example</button><button id="bulkclear">Clear input</button></div><p class="muted" id="bulkmsg" aria-live="polite"></p><section class="annotation-tools" id="thermoEditor"><h3>Thermodynamic points</h3><p class="muted">Add independent LCL, LFC, EL, CCL or custom points. They do not join either sounding profile. Use the Reference tool and click a thermodynamic point to toggle its three curves.</p><label for="thermoName">Point label</label><input id="thermoName" value="LCL" maxlength="32"><label for="thermoP">Pressure (hPa)</label><input id="thermoP" type="number" value="850" min="50" max="1100" step="0.1"><label for="thermoT">Temperature (°C)</label><input id="thermoT" type="number" value="10" step="0.1"><div class="bulk-actions"><button id="thermoAdd">Add point</button><button id="thermoUpdate" disabled>Update selected</button><button id="thermoDelete" disabled>Delete selected</button></div><p class="muted" id="thermoMsg" aria-live="polite"></p><div id="thermoList"></div></section><section class="annotation-tools" aria-label="Text annotation editor"><h3>Text annotations</h3><p class="muted">Select the T icon, then click the chart to place text. Click or drag an existing label to select or move it. Text stays attached to its chart coordinates while zooming.</p><label for="annotationText">Label text</label><input id="annotationText" type="text" placeholder="Select a label to edit" maxlength="180"><label for="annotationColor">Text color</label><input id="annotationColor" type="color" value="#111827"><label for="annotationSize">Font size (px)</label><input id="annotationSize" type="number" min="8" max="72" value="18"><div><button id="annotationAdd">Add at chart center</button><button id="annotationDelete">Delete selected</button></div><p id="annotationMessage" class="muted" aria-live="polite"></p></section><h3 style="margin-top:25px">Plotted points</h3><div id="points"></div><p class="muted">Use Set in the table, or select ◎ Set reference and click an existing plotted point. Multiple locked references are supported. Solid curves = locked references; dashed curves = live hover.</p></aside></div><div class="status" id="status">Hover over the chart</div><script>
+if(!window.d3){document.querySelector('.card').innerHTML='<p>D3.js could not load. Connect to the internet and refresh this page.</p>';throw Error('D3 unavailable')}
+const d3=window.d3,svg=d3.select('#chart');let W=1200,H=800;const m={l:0,r:0,t:0,b:0};let iw=W,ih=H,K=.2854,eps=.622;
+const Tlo=-100,Thi=40,thlo=250,thhi=450;
+let x=d3.scaleLinear().domain([Tlo,Thi]).range([m.l,m.l+iw]),y=d3.scaleLinear().domain([thlo,thhi]).range([m.t+ih,m.t]);
+const theta=(tc,p)=>(tc+273.15)*Math.pow(1000/p,K);
+const pressure=(tc,th)=>1000*Math.pow((tc+273.15)/th,1/K);
+const temp=(th,p)=>th*Math.pow(p/1000,K)-273.15;
+const es=tc=>6.112*Math.exp(17.67*tc/(tc+243.5));
+const satMix=(tc,p)=>eps*es(tc)/(p-es(tc));
+function tcForMix(w,p){let lo=-120,hi=65;for(let i=0;i<42;i++){let mid=(lo+hi)/2;if(satMix(mid,p)>w)hi=mid;else lo=mid;}return(lo+hi)/2}
+function moistLapse(tc,p){let tk=tc+273.15,rs=Math.max(0,satMix(tc,p)),Lv=2.5e6,Rd=287.05,Cp=1004,Rv=461.5,g=9.80665;let gm=g*(1+Lv*rs/(Rd*tk))/(Cp+Lv*Lv*rs*eps/(Rd*tk*tk));let Tv=tk*(1+0.61*rs);return gm*Rd*Tv/(g*p)}
+function moistCurve(tc,p){let result=[{t:tc,p}],up={t:tc,p},down={t:tc,p};for(let i=0;i<1000;i++){let np=up.p-2;if(np<50)break;up={t:up.t-moistLapse(up.t,up.p)*2,p:np};result.unshift(up)}for(let i=0;i<550;i++){let np=down.p+2;if(np>1100)break;down={t:down.t+moistLapse(down.t,down.p)*2,p:np};result.push(down)}return result}
+const plot=svg.append('g').attr('clip-path','url(#plotclip)'),defs=svg.append('defs');defs.append('clipPath').attr('id','plotclip').append('rect').attr('x',m.l).attr('y',m.t).attr('width',iw).attr('height',ih);
+const background=plot.append('g'),referenceLayer=plot.append('g'),thermoLayer=plot.append('g'),profiles=plot.append('g'),hover=plot.append('g');
+// No border, axis ticks, or axis titles: the thermodynamic grid fills the canvas.
+let transform=d3.zoomIdentity,active='db',data={db:[],wb:[]},mouse=null,references=[],referenceMode=false;
+function coords(tc,p){return[x(tc),y(theta(tc,p))]}
+function pathFor(samples){return d3.line().defined(d=>{let th=theta(d.t,d.p);return Number.isFinite(th)&&th>180&&th<530}).x(d=>x(d.t)).y(d=>y(theta(d.t,d.p)))(samples)}
+function drawBackground(){background.selectAll('*').remove();let g=background;
+for(let tc=-100;tc<=40;tc+=2){g.append('line').attr('x1',x(tc)).attr('x2',x(tc)).attr('y1',y(250)).attr('y2',y(450)).attr('stroke',tc%10===0?'#b7bec8':'#e5e7eb').attr('stroke-width',tc%10===0?1:.55)}
+for(let th=250;th<=450;th+=2){g.append('line').attr('x1',x(-100)).attr('x2',x(40)).attr('y1',y(th)).attr('y2',y(th)).attr('stroke',th%20===10?'#adb5bd':'#e5e7eb').attr('stroke-width',th%20===10?1:.55)}
+for(let p of [50,100,150,200,250,300,400,500,600,700,800,850,900,950,1000,1050]){let pts=d3.range(-110,51,1).map(t=>({t,p}));g.append('path').attr('d',pathFor(pts)).attr('fill','none').attr('stroke','#4b5563').attr('stroke-width',p%100===0?1.6:.8);let candidates=pts.filter(v=>{let th=theta(v.t,p);return th>260&&th<445&&v.t>-96&&v.t<36});if(candidates.length){let v=candidates[Math.floor(candidates.length*.72)];g.append('text').attr('x',x(v.t)).attr('y',y(theta(v.t,p))-3).attr('font-size',10).attr('fill','#374151').text(p+' hPa')}}
+for(let th of d3.range(260,451,20)){let pts=d3.range(50,1101,4).map(p=>({p,t:temp(th,p)}));g.append('path').attr('d',pathFor(pts)).attr('fill','none').attr('stroke','#b9c0c8').attr('stroke-width',1)}
+for(let w of [.1,.2,.5,1,2,3,4,6,8,10,12,16,20,24,28,32]){let pts=d3.range(100,1101,4).map(p=>({p,t:tcForMix(w/1000,p)}));g.append('path').attr('d',pathFor(pts)).attr('fill','none').attr('stroke','#9ca3af').attr('stroke-dasharray','2,3').attr('stroke-width',.9)}
+for(let t of [-30,-10,10,30]){let pts=moistCurve(t,850);g.append('path').attr('d',pathFor(pts)).attr('fill','none').attr('stroke','#c5cbd3').attr('stroke-width',1.15)}
+}
+function thermodynamicCurves(t,p){
+ const th=theta(t,p),w=satMix(t,p);
+ return [
+  {label:'Dry adiabat',color:'#b45309',samples:d3.range(50,1101,3).map(pp=>({p:pp,t:temp(th,pp)}))},
+  {label:'Saturated adiabat',color:'#15803d',samples:moistCurve(t,p)},
+  {label:'Mixing ratio',color:'#7c3aed',samples:d3.range(80,1101,3).map(pp=>({p:pp,t:tcForMix(w,pp)}))}
+ ];
+}
+function drawReference(){
+ referenceLayer.selectAll('*').remove();
+ const allReferences=[...references];
+ allReferences.forEach((reference,i)=>{
+  const group=referenceLayer.append('g').attr('data-reference',reference.id);
+  for(const curve of thermodynamicCurves(reference.t,reference.p)){
+   group.append('path').attr('d',pathFor(curve.samples)).attr('fill','none')
+    .attr('stroke',curve.color).attr('stroke-width',2.1).attr('opacity',.40);
+  }
+  group.append('circle').attr('cx',x(reference.t)).attr('cy',y(theta(reference.t,reference.p)))
+   .attr('r',8).attr('fill','white').attr('stroke','#111827').attr('stroke-width',2).style('pointer-events','none');
+  group.append('text').attr('x',x(reference.t)+10).attr('y',y(theta(reference.t,reference.p))-9)
+   .attr('font-size',12).attr('font-weight','bold').attr('fill','#111827').style('pointer-events','none').text(reference.kind==='thermo'?reference.point.name:'R'+(references.indexOf(reference)+1));
+ });
+ drawThermoPoints();refreshThermoList();
+}
+let nextReferenceId=1;
+let thermoPoints=[],nextThermoId=1,selectedThermoId=null,thermoMode=false;
+function validThermo(t,p){return Number.isFinite(t)&&Number.isFinite(p)&&t>-150&&t<100&&p>=50&&p<=1100&&Number.isFinite(theta(t,p))}
+function openThermoEditor(){const panel=document.getElementById('panel');panel.classList.remove('closed');document.getElementById('toggle').setAttribute('aria-expanded','true');requestAnimationFrame(()=>document.getElementById('thermoEditor').scrollIntoView({block:'nearest',behavior:'smooth'}));}
+function selectThermo(id){selectedThermoId=id;const d=thermoPoints.find(v=>v.id===id);if(!d)return;document.getElementById('thermoName').value=d.name;document.getElementById('thermoT').value=d.t;document.getElementById('thermoP').value=d.p;openThermoEditor();drawReference();}
+function addThermo(t,p,name){if(!validThermo(t,p)){document.getElementById('thermoMsg').textContent='Enter a valid temperature and pressure (50–1100 hPa).';return;}const d={id:nextThermoId++,t,p,name:(name||'Point').trim().slice(0,32)||'Point'};thermoPoints.push(d);selectedThermoId=d.id;document.getElementById('thermoName').value=d.name;document.getElementById('thermoT').value=d.t;document.getElementById('thermoP').value=d.p;drawReference();}
+function refreshThermoList(){const el=document.getElementById('thermoList');el.replaceChildren();for(const d of thermoPoints){const row=document.createElement('div');row.className='thermo-row';const label=document.createElement('span');label.textContent=`${d.name} · ${d.p.toFixed(1)} hPa · ${d.t.toFixed(1)} °C`;const btn=document.createElement('button');btn.textContent=d.id===selectedThermoId?'Selected':'Edit';btn.onclick=()=>selectThermo(d.id);row.append(label,btn);el.append(row)}document.getElementById('thermoUpdate').disabled=!thermoPoints.some(d=>d.id===selectedThermoId);document.getElementById('thermoDelete').disabled=!thermoPoints.some(d=>d.id===selectedThermoId);}
+document.getElementById('thermoAdd').onclick=()=>addThermo(+document.getElementById('thermoT').value,+document.getElementById('thermoP').value,document.getElementById('thermoName').value);
+document.getElementById('thermoUpdate').onclick=()=>{const d=thermoPoints.find(v=>v.id===selectedThermoId);if(!d)return;const t=+document.getElementById('thermoT').value,p=+document.getElementById('thermoP').value;if(!validThermo(t,p))return alert('Invalid thermodynamic point.');Object.assign(d,{t,p,name:document.getElementById('thermoName').value.trim().slice(0,32)||'Point'});references.filter(r=>r.point===d).forEach(r=>{r.t=d.t;r.p=d.p});drawReference()};
+document.getElementById('thermoDelete').onclick=()=>{thermoPoints=thermoPoints.filter(d=>d.id!==selectedThermoId);selectedThermoId=null;cleanReferences();drawReference()};
+document.getElementById('thermomode').onclick=()=>{thermoMode=!thermoMode;referenceMode=false;document.getElementById('reference').classList.remove('active');document.getElementById('thermomode').classList.toggle('active',thermoMode);document.getElementById('thermomode').setAttribute('aria-pressed',String(thermoMode));/* Do not open the side panel here: changing plot dimensions feels like an unexpected zoom. */};
+function drawThermoPoints(){thermoLayer.selectAll('*').remove();for(const d of thermoPoints){const g=thermoLayer.append('g').style('cursor','pointer');g.append('circle').attr('cx',x(d.t)).attr('cy',y(theta(d.t,d.p))).attr('r',d.id===selectedThermoId?8:6).attr('fill','#fef08a').attr('stroke','#854d0e').attr('stroke-width',2);g.append('text').attr('x',x(d.t)+11).attr('y',y(theta(d.t,d.p))-9).attr('fill','#713f12').attr('font-size',13).attr('font-weight',700).text(d.name);g.on('click',event=>{event.stopPropagation();if(referenceMode){setReference('thermo',d)}else{selectThermo(d.id)}});}}
+
+function setReference(kind,point){
+ const found=references.findIndex(r=>r.kind===kind&&r.point===point);
+ if(found>=0){references.splice(found,1)}
+ else references.push({id:nextReferenceId++,kind,point,t:point.t,p:point.p});
+ referenceMode=false;
+ document.getElementById('reference').classList.remove('active');
+ 
+ drawReference();refreshTable();
+}
+function removeReference(id){
+ if(id===undefined)references=[];else references=references.filter(r=>r.id!==id);
+ drawReference();refreshTable();
+}
+function cleanReferences(){
+ references=references.filter(r=>r.kind==='free'||(r.kind==='thermo'?thermoPoints.includes(r.point):data[r.kind].includes(r.point)));
+ drawReference();
+}
+function findNearestPoint(sx,sy){
+ let best=null,dist=Infinity;
+ for(const kind of ['db','wb'])for(const point of data[kind]){
+  const dx=x(point.t)-sx,dy=y(theta(point.t,point.p))-sy,d=Math.hypot(dx,dy);
+  if(d<dist){dist=d;best={kind,point}}
+ }
+ for(const point of thermoPoints){const d=Math.hypot(x(point.t)-sx,y(theta(point.t,point.p))-sy);if(d<dist){dist=d;best={kind:'thermo',point}}}
+ return dist<=18?best:null;
+}
+function redrawProfiles(){profiles.selectAll('*').remove();for(let kind of ['db','wb']){let arr=[...data[kind]].sort((a,b)=>b.p-a.p),color=kind==='db'?'#dc2626':'#2563eb';profiles.append('path').attr('d',pathFor(arr)).attr('fill','none').attr('stroke',color).attr('stroke-width',3.4);profiles.selectAll('.'+kind).data(arr).enter().append('circle').attr('cx',d=>x(d.t)).attr('cy',d=>y(theta(d.t,d.p))).attr('r',4).attr('fill',color).attr('stroke','white').attr('stroke-width',1.4)}}
+function drawHover(){hover.selectAll('*').remove();if(!mouse)return;let {t,p}=mouse,th=theta(t,p);for(const curve of thermodynamicCurves(t,p))hover.append('path').attr('d',pathFor(curve.samples)).attr('stroke',curve.color).attr('stroke-width',2.6).attr('opacity',.95).attr('stroke-dasharray','8 4').attr('fill','none');hover.append('circle').attr('cx',x(t)).attr('cy',y(th)).attr('r',5).attr('fill','#0f172a').attr('stroke','white').attr('stroke-width',2)}
+function setActive(k){active=k;document.getElementById('db').classList.toggle('active',k==='db');document.getElementById('wb').classList.toggle('active',k==='wb')}
+function addPoint(t,p){if(!Number.isFinite(t)||!Number.isFinite(p)||p<50||p>1100)return alert('Enter valid temperature and pressure (50–1100 hPa).');data[active].push({t,p});redrawProfiles();refreshTable()}
+function refreshTable(){
+ let html='<table><tr><th>Profile</th><th>hPa</th><th>°C</th><th>Reference</th></tr>';
+ for(const k of ['db','wb'])for(const d of [...data[k]].sort((a,b)=>b.p-a.p)){
+  const idx=data[k].indexOf(d),selected=references.find(r=>r.kind===k&&r.point===d);
+  html+=`<tr class="${selected?'ref-row':''}"><td>${k.toUpperCase()}</td><td>${d.p.toFixed(1)}</td><td>${d.t.toFixed(1)}</td><td><button type="button" data-ref-kind="${k}" data-ref-index="${idx}" style="padding:3px 6px;margin:0">${selected?'✓ R'+(references.indexOf(selected)+1)+' (remove)':'Set'}</button></td></tr>`;
+ }
+ document.getElementById('points').innerHTML=html+'</table>';
+ document.querySelectorAll('[data-ref-kind]').forEach(b=>b.onclick=()=>setReference(b.dataset.refKind,data[b.dataset.refKind][+b.dataset.refIndex]));
+}
+function bulkAdd(){
+ const raw=document.getElementById('bulk').value.split(/\r?\n/);
+ const pending={db:[],wb:[]},errors=[];let n=0;
+ raw.forEach((line,i)=>{
+  const trimmed=line.trim();if(!trimmed||trimmed.startsWith('#'))return;
+  if(/^p(?:ressure)?\s*[,\t ]/i.test(trimmed))return;
+  const parts=line.includes(',')?line.split(','):line.includes('\t')?line.split('\t'):trimmed.split(/\s+/);
+  if(parts.length<2||parts.length>3){errors.push(i+1);return}
+  const p=Number(parts[0].trim());
+  if(!Number.isFinite(p)||p<50||p>1100){errors.push(i+1);return}
+  let count=0,invalid=false;
+  for(let j=1;j<=2;j++){
+   const val=(parts[j]??'').trim();if(!val)continue;
+   const t=Number(val);
+   if(!Number.isFinite(t)||t < -130||t>70){invalid=true;break}
+   pending[j===1?'db':'wb'].push({t,p});count++;
+  }
+  if(invalid||!count){errors.push(i+1);pending.db=pending.db.filter(d=>d.p!==p||data.db.some(old=>old===d));pending.wb=pending.wb.filter(d=>d.p!==p||data.wb.some(old=>old===d));return}
+  n+=count;
+ });
+ const msg=document.getElementById('bulkmsg');
+ if(errors.length){msg.textContent='Please correct row(s) '+errors.join(', ')+'. No points imported.';msg.style.color='#b91c1c';return}
+ data.db.push(...pending.db);data.wb.push(...pending.wb);
+ redrawProfiles();refreshTable();msg.style.color='#166534';msg.textContent=`Added ${n} observations (${pending.db.length} DB, ${pending.wb.length} WB).`;
+}
+function updateStatus(){const tip=document.getElementById('status');tip.style.display=mouse?'block':'none';tip.innerHTML=mouse?`<b>T ${mouse.t.toFixed(1)} °C</b> · <b>P ${mouse.p.toFixed(1)} hPa</b><br>θ ${theta(mouse.t,mouse.p).toFixed(1)} K · ws ${(satMix(mouse.t,mouse.p)*1000).toFixed(2)} g/kg`:'Hover over the chart'}
+function positionTooltip(event){const tip=document.getElementById('status');if(!mouse)return;const offset=18;let left=event.clientX+offset,top=event.clientY+offset;const r=tip.getBoundingClientRect();if(left+r.width>innerWidth-8)left=event.clientX-r.width-offset;if(top+r.height>innerHeight-8)top=event.clientY-r.height-offset;tip.style.left=Math.max(8,left)+'px';tip.style.top=Math.max(8,top)+'px'}
+let baseX=x.copy(),baseY=y.copy();
+const zoom=d3.zoom().scaleExtent([1,9]).filter(e=>e.type==='wheel'||e.type==='mousedown'&&e.button===0||e.type==='touchstart').on('zoom',e=>{transform=e.transform;x=transform.rescaleX(baseX);y=transform.rescaleY(baseY);drawBackground();drawReference();redrawProfiles();drawAnnotations();mouse=null;updateStatus();hover.selectAll('*').remove()});
+svg.call(zoom).on('dblclick.zoom',null);
+const interaction=svg.append('rect').attr('x',m.l).attr('y',m.t).attr('width',iw).attr('height',ih).attr('fill','transparent').style('pointer-events','all');
+
+// Editable annotations are stored in meteorological coordinates (T, theta).
+// Rendering is in a separate SVG layer so zooming never scales the font size.
+const annotationLayer=svg.append('g').attr('class','annotations');
+let annotations=[],selectedAnnotation=null,textMode=false,nextAnnotationId=1;
+const textInput=document.getElementById('annotationText'),colorInput=document.getElementById('annotationColor'),sizeInput=document.getElementById('annotationSize');
+function annotationNotice(message){document.getElementById('annotationMessage').textContent=message}
+function openAnnotationEditor(){const panel=document.getElementById('panel');panel.classList.remove('closed');document.getElementById('toggle').setAttribute('aria-expanded','true');requestAnimationFrame(()=>document.querySelector('.annotation-tools').scrollIntoView({block:'nearest',behavior:'smooth'}));}
+function selectAnnotation(id){openAnnotationEditor();selectedAnnotation=id;const a=annotations.find(q=>q.id===id);if(a){textInput.value=a.text;colorInput.value=a.color;sizeInput.value=a.size;annotationNotice('Selected label. Edit the fields or drag the text to move it.');}drawAnnotations()}
+function addAnnotation(sx,sy){const t=x.invert(sx),th=y.invert(sy);const a={id:nextAnnotationId++,t,th,text:textInput.value.trim()||'New annotation',color:colorInput.value,size:Math.max(8,Math.min(72,+sizeInput.value||18))};annotations.push(a);selectAnnotation(a.id);}
+function drawAnnotations(){
+ const labels=annotationLayer.selectAll('text.annotation-label').data(annotations,d=>d.id);
+ labels.exit().remove();
+ const entered=labels.enter().append('text').attr('class','annotation-label').attr('dominant-baseline','middle').attr('stroke-linejoin','round');
+ entered.merge(labels).attr('x',d=>x(d.t)).attr('y',d=>y(d.th)).attr('font-size',d=>d.size).attr('font-family','system-ui, sans-serif').attr('font-weight',600).attr('fill',d=>d.color).classed('selected',d=>d.id===selectedAnnotation).text(d=>d.text)
+ .on('click',(event,d)=>{event.stopPropagation();selectAnnotation(d.id)})
+ .call(d3.drag().on('start',(event,d)=>{event.sourceEvent.stopPropagation();selectAnnotation(d.id)}).on('drag',(event,d)=>{d.t=x.invert(event.x);d.th=y.invert(event.y);drawAnnotations()}));
+}
+function updateAnnotation(){const a=annotations.find(q=>q.id===selectedAnnotation);if(!a)return;a.text=textInput.value;a.color=colorInput.value;a.size=Math.max(8,Math.min(72,+sizeInput.value||18));drawAnnotations()}
+[textInput,colorInput,sizeInput].forEach(el=>el.addEventListener('input',updateAnnotation));
+document.getElementById('annotationAdd').onclick=()=>{addAnnotation(W/2,H/2);openAnnotationEditor()};
+document.getElementById('annotationDelete').onclick=()=>{annotations=annotations.filter(q=>q.id!==selectedAnnotation);selectedAnnotation=null;textInput.value='';annotationNotice('Annotation deleted.');drawAnnotations()};
+document.getElementById('textmode').onclick=()=>{textMode=!textMode;if(textMode)openAnnotationEditor();document.getElementById('textmode').classList.toggle('active',textMode);document.getElementById('textmode').setAttribute('aria-pressed',String(textMode));annotationNotice(textMode?'Click an empty part of the chart to insert a text label.':'Text placement off. Existing labels remain editable.');};
+
+interaction.on('pointermove',function(event){if(event.buttons)return;let [sx,sy]=d3.pointer(event,svg.node());let t=x.invert(sx),th=y.invert(sy),p=pressure(t,th);mouse=Number.isFinite(p)&&p>=50&&p<=1100?{t,p}:null;drawHover();updateStatus();positionTooltip(event)}).on('pointerleave',()=>{mouse=null;drawHover();updateStatus()}).on('click',function(event){if(event.defaultPrevented)return;if(textMode){let [sx,sy]=d3.pointer(event,svg.node());addAnnotation(sx,sy);return;}if(thermoMode){let [sx,sy]=d3.pointer(event,svg.node());const t=x.invert(sx),p=pressure(t,y.invert(sy));addThermo(t,p,document.getElementById('thermoName').value);return;}if(referenceMode){let [sx,sy]=d3.pointer(event,svg.node()),hit=findNearestPoint(sx,sy);if(hit)setReference(hit.kind,hit.point);else alert('Click directly on an existing sounding or thermodynamic point.');return;}if(!mouse)return;addPoint(mouse.t,mouse.p)});
+// Right-click anywhere on the plot to toggle a reference at an existing point,
+// or place a free-standing reference at the clicked meteorological coordinates.
+svg.on('contextmenu.reference',function(event){
+ event.preventDefault();
+ const [sx,sy]=d3.pointer(event,svg.node());
+ if(sx<0||sy<0||sx>W||sy>H)return;
+ const hit=findNearestPoint(sx,sy);
+ if(hit){setReference(hit.kind,hit.point);return;}
+ const t=x.invert(sx),p=pressure(t,y.invert(sy));
+ if(!validThermo(t,p))return;
+ const existing=references.findIndex(r=>r.kind==='free'&&Math.hypot(x(r.t)-sx,y(theta(r.t,r.p))-sy)<12);
+ if(existing>=0)references.splice(existing,1);
+ else references.push({id:nextReferenceId++,kind:'free',point:null,t,p});
+ drawReference();refreshTable();
+});
+// Drag anywhere to pan; wheel zooms. A stationary click plots a point.
+interaction.call(zoom);annotationLayer.raise();
+// Context-aware cursors: crosshair on open chart, pointer on observations,
+// move on annotations, and grabbing only during an actual pan gesture.
+let isPanning=false,downAt=null;
+function updatePlotCursor(event){
+ if(isPanning){interaction.style('cursor','grabbing');return;}
+ if(textMode){interaction.style('cursor','crosshair');return;}
+ const [sx,sy]=d3.pointer(event,svg.node());
+ interaction.style('cursor',findNearestPoint(sx,sy)?'pointer':'crosshair');
+}
+interaction.style('cursor','crosshair')
+ .on('pointermove.cursor',updatePlotCursor)
+ .on('pointerdown.cursor',function(event){
+   if(event.button!==0)return;
+   downAt=d3.pointer(event,svg.node());
+ })
+ .on('pointerup.cursor',function(event){
+   isPanning=false;downAt=null;updatePlotCursor(event);
+ })
+ .on('pointercancel.cursor pointerleave.cursor',function(){isPanning=false;downAt=null;interaction.style('cursor','crosshair')});
+// Zoom drag events fire after D3 recognizes a drag, not for a simple click.
+zoom.on('start.cursor',event=>{if(event.sourceEvent?.type==='mousedown'){isPanning=false;}})
+    .on('zoom.cursor',event=>{
+      if(event.sourceEvent?.type==='mousemove' && downAt){
+        const [sx,sy]=d3.pointer(event.sourceEvent,svg.node());
+        if(Math.hypot(sx-downAt[0],sy-downAt[1])>4){isPanning=true;interaction.style('cursor','grabbing');}
+      }
+    })
+    .on('end.cursor',()=>{isPanning=false;downAt=null;interaction.style('cursor','crosshair')});
+svg.style('background','#fff');
+document.getElementById('toggle').onclick=()=>{let panel=document.getElementById('panel');panel.classList.toggle('closed');document.getElementById('toggle').setAttribute('aria-expanded',String(!panel.classList.contains('closed')))};
+document.getElementById('reference').onclick=()=>{referenceMode=!referenceMode;document.getElementById('reference').classList.toggle('active',referenceMode);document.getElementById('reference').setAttribute('aria-pressed',String(referenceMode))};document.getElementById('removeRef').onclick=()=>removeReference();document.getElementById('db').onclick=()=>setActive('db');document.getElementById('wb').onclick=()=>setActive('wb');document.getElementById('add').onclick=()=>addPoint(+document.getElementById('t').value,+document.getElementById('p').value);document.getElementById('undo').onclick=()=>{const removed=data[active].pop();cleanReferences();redrawProfiles();refreshTable()};document.getElementById('clear').onclick=()=>{if(confirm('Clear '+active.toUpperCase()+' profile?')){data[active]=[];cleanReferences();redrawProfiles();refreshTable()}};document.getElementById('bulkadd').onclick=bulkAdd;document.getElementById('bulksample').onclick=()=>{document.getElementById('bulk').value='P,DB,DP\n1000,28,23\n925,23,19\n850,18,14\n700,8,4\n500,-9,-13\n300,-36,-39'};document.getElementById('bulkclear').onclick=()=>{document.getElementById('bulk').value='';document.getElementById('bulkmsg').textContent=''};document.getElementById('reset').onclick=()=>interaction.transition().duration(300).call(zoom.transform,d3.zoomIdentity);
+function svgBlob(){let clone=svg.node().cloneNode(true);clone.setAttribute('xmlns','http://www.w3.org/2000/svg');clone.setAttribute('width',W);clone.setAttribute('height',H);clone.style.background='white';return new Blob([new XMLSerializer().serializeToString(clone)],{type:'image/svg+xml;charset=utf-8'})}
+function save(blob,name){let a=document.createElement('a'),u=URL.createObjectURL(blob);a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),3000)}
+document.getElementById('svgexport').onclick=()=>save(svgBlob(),'tephigram.svg');document.getElementById('png').onclick=()=>{let u=URL.createObjectURL(svgBlob()),im=new Image();im.onload=()=>{let canvas=document.createElement('canvas');canvas.width=W*2;canvas.height=H*2;let c=canvas.getContext('2d');c.fillStyle='white';c.fillRect(0,0,canvas.width,canvas.height);c.drawImage(im,0,0,canvas.width,canvas.height);canvas.toBlob(b=>save(b,'tephigram.png'));URL.revokeObjectURL(u)};im.src=u};
+function resizePlot(){const r=svg.node().getBoundingClientRect();if(r.width<1||r.height<1)return;W=r.width;H=r.height;iw=W;ih=H;svg.attr('viewBox',`0 0 ${W} ${H}`);baseX=d3.scaleLinear().domain([Tlo,Thi]).range([0,W]);baseY=d3.scaleLinear().domain([thlo,thhi]).range([H,0]);x=transform.rescaleX(baseX);y=transform.rescaleY(baseY);defs.select('rect').attr('width',W).attr('height',H);interaction.attr('width',W).attr('height',H);drawBackground();drawReference();redrawProfiles();drawHover();drawAnnotations();}
+new ResizeObserver(resizePlot).observe(svg.node());
+resizePlot();refreshTable();
+// Match the SVG coordinate system to the actual viewport: no letterboxing,
+// no stretched fonts, and consistent stroke widths across screen sizes.
+function fitPlot(){
+ const rect=document.querySelector('.card').getBoundingClientRect();
+ const newW=Math.max(200,Math.round(rect.width)),newH=Math.max(200,Math.round(rect.height));
+ if(newW===W&&newH===H)return;
+ W=newW;H=newH;iw=W;ih=H;
+ svg.attr('viewBox',`0 0 ${W} ${H}`);
+ defs.select('#plotclip rect').attr('x',0).attr('y',0).attr('width',W).attr('height',H);
+ interaction.attr('x',0).attr('y',0).attr('width',W).attr('height',H);
+ baseX.range([0,W]);baseY.range([H,0]);
+ x=transform.rescaleX(baseX);y=transform.rescaleY(baseY);
+ drawBackground();drawReference();redrawProfiles();drawHover();drawAnnotations();
+}
+new ResizeObserver(fitPlot).observe(document.querySelector('.card'));
+fitPlot();
+// Versioned local session storage. Point references are serialized by index/ID,
+// rather than object identity, and restored against their original objects.
+const SESSION_KEY='interactive-tephigram-session-v1';
+let restoringSession=false,saveTimer=null;
+function sessionSnapshot(){
+ return {version:1,savedAt:new Date().toISOString(),data,thermoPoints,annotations,
+  references:references.map(r=>({id:r.id,kind:r.kind,t:r.t,p:r.p,
+   index:r.kind==='db'||r.kind==='wb'?data[r.kind].indexOf(r.point):null,
+   thermoId:r.kind==='thermo'?r.point.id:null})),
+  transform:{x:transform.x,y:transform.y,k:transform.k},active,
+  nextReferenceId,nextThermoId,nextAnnotationId,
+  selectedThermoId,selectedAnnotation};
+}
+function saveSession(showNotice=false){
+ try{localStorage.setItem(SESSION_KEY,JSON.stringify(sessionSnapshot()));
+  if(showNotice)alert('Tephigram session saved in this browser.');
+ }catch(e){if(showNotice)alert('Could not save session: '+e.message);}
+}
+function queueSessionSave(){if(restoringSession)return;clearTimeout(saveTimer);saveTimer=setTimeout(()=>saveSession(),400);}
+function restoreSession(snapshot){
+ if(!snapshot||snapshot.version!==1||!snapshot.data||!Array.isArray(snapshot.data.db)||!Array.isArray(snapshot.data.wb))throw Error('Unsupported or invalid session');
+ restoringSession=true;
+ try{
+  data={db:snapshot.data.db.map(d=>({t:+d.t,p:+d.p})),wb:snapshot.data.wb.map(d=>({t:+d.t,p:+d.p}))};
+  thermoPoints=(snapshot.thermoPoints||[]).map(d=>({...d,t:+d.t,p:+d.p}));
+  annotations=(snapshot.annotations||[]).map(d=>({...d,t:+d.t,th:+d.th}));
+  references=(snapshot.references||[]).map(r=>{
+   const point=r.kind==='thermo'?thermoPoints.find(d=>d.id===r.thermoId):
+    (r.kind==='db'||r.kind==='wb'?data[r.kind][r.index]:null);
+   if(r.kind!=='free'&&!point)return null;
+   return {id:r.id,kind:r.kind,point,t:point?point.t:+r.t,p:point?point.p:+r.p};
+  }).filter(Boolean);
+  nextReferenceId=Math.max(snapshot.nextReferenceId||1,1,...references.map(r=>r.id+1));
+  nextThermoId=Math.max(snapshot.nextThermoId||1,1,...thermoPoints.map(d=>d.id+1));
+  nextAnnotationId=Math.max(snapshot.nextAnnotationId||1,1,...annotations.map(d=>d.id+1));
+  selectedThermoId=snapshot.selectedThermoId??null;
+  selectedAnnotation=snapshot.selectedAnnotation??null;
+  setActive(snapshot.active==='wb'?'wb':'db');
+  const z=snapshot.transform||{x:0,y:0,k:1};
+  svg.call(zoom.transform,d3.zoomIdentity.translate(+z.x||0,+z.y||0).scale(+z.k||1));
+  drawReference();redrawProfiles();drawAnnotations();refreshTable();
+ }finally{restoringSession=false;}
+}
+document.getElementById('saveSession').onclick=()=>saveSession(true);
+// Changes to chart data, reference points, annotations, and view are saved.
+for(const fnName of ['addPoint','bulkAdd','addThermo','setReference','removeReference','cleanReferences','addAnnotation','updateAnnotation']){
+ // Explicit calls below are used rather than replacing function declarations.
+}
+const originalSaveMutations={};
+// Capture changes to the chart via the input events and redraw lifecycle.
+const originalRedrawProfiles=redrawProfiles;
+redrawProfiles=function(...args){const result=originalRedrawProfiles(...args);queueSessionSave();return result};
+const originalDrawReference=drawReference;
+drawReference=function(...args){const result=originalDrawReference(...args);queueSessionSave();return result};
+const originalDrawAnnotations=drawAnnotations;
+drawAnnotations=function(...args){const result=originalDrawAnnotations(...args);queueSessionSave();return result};
+zoom.on('end.autosave',queueSessionSave);
+// Restore prompt runs only after initial chart sizing and initialization.
+try{const raw=localStorage.getItem(SESSION_KEY);
+ if(raw){if(confirm('A saved tephigram session was found. Would you like to restore it?\n\nOK = Restore saved session\nCancel = Start fresh'))restoreSession(JSON.parse(raw));else {restoringSession=true;setTimeout(()=>{restoringSession=false},1000);}}
+}catch(e){console.warn('Saved tephigram could not be restored:',e);}
+</script></body></html>
